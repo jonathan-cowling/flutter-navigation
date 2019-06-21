@@ -35,10 +35,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Container(
                         color: Colors.red,
                         child: GestureDetector(onTap: () {
+                          debugPrint("going from 1 to 2");
                           Navigator.of(context).pushNamed("2");
                         }));
                   case "2":
-                    return Container(color: Colors.green);
+                    return WillPopScope(
+                      child: Container(color: Colors.green),
+                      onWillPop: ()async {
+                        debugPrint("popping from route 2 disabled");
+                        return false;
+                      },
+                    );
                   default:
                     throw Exception("unrecognise route \"${settings.name}\"");
                 }
